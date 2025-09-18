@@ -16,6 +16,7 @@ import { DashboardOverview } from "./components/DashboardOverview";
 import { AcademicPerformance } from "./components/AcademicPerformance";
 import { AttendanceTracker } from "./components/AttendanceTracker";
 import { ActivityTracker } from "./components/ActivityTracker";
+import { GradingSection } from "./components/GradingSection";
 import { Toaster } from "./components/ui/sonner";
 import { 
   LayoutDashboard, 
@@ -38,6 +39,11 @@ const menuItems = [
     id: "performance"
   },
   {
+    title: "Grading",
+    icon: BarChart3,
+    id: "grading"
+  },
+  {
     title: "Attendance",
     icon: Calendar,
     id: "attendance"
@@ -47,7 +53,6 @@ const menuItems = [
     icon: Trophy,
     id: "activities"
   },
-  // ...existing code...
   {
     title: "Transcripts",
     icon: FileText,
@@ -78,11 +83,17 @@ export default function App() {
         );
       case "performance":
         return <AcademicPerformance />;
+      case "grading":
+        return (
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Grading Overview</h2>
+            <GradingSection />
+          </div>
+        );
       case "attendance":
         return <AttendanceTracker />;
       case "activities":
         return <ActivityTracker />;
-      // ...existing code...
       case "transcripts":
         return (
           <div className="space-y-6">
