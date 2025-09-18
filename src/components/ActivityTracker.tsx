@@ -9,7 +9,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from ".
 import { Badge } from "./ui/badge";
 import { Progress } from "./ui/progress";
 import { Upload, FileText, Calendar, Trophy, Star } from "lucide-react";
-import { toast } from "sonner@2.0.3";
+import { toast } from "sonner";
 
 export function ActivityTracker() {
   const [activities] = useState([
@@ -20,17 +20,17 @@ export function ActivityTracker() {
       provider: "Coursera",
       credits: 3,
       status: "Completed",
-      date: "2024-01-10",
+  date: "2025-01-10",
       certificate: "react-certificate.pdf"
     },
     {
       id: 2,
-      title: "AI/ML Conference 2024",
+  title: "AI/ML Conference 2025",
       type: "Conference",
       provider: "Tech Institute",
       credits: 2,
       status: "Verified",
-      date: "2024-01-05",
+  date: "2025-01-05",
       certificate: "conference-certificate.pdf"
     },
     {
@@ -50,7 +50,7 @@ export function ActivityTracker() {
       provider: "University",
       credits: 1,
       status: "Pending Review",
-      date: "2024-01-12",
+  date: "2025-01-12",
       certificate: "seminar-attendance.pdf"
     }
   ]);
@@ -164,7 +164,7 @@ export function ActivityTracker() {
 
               <div className="space-y-2">
                 <Label htmlFor="type">Activity Type</Label>
-                <Select value={newActivity.type} onValueChange={(value) => setNewActivity(prev => ({ ...prev, type: value }))}>
+                <Select value={newActivity.type} onValueChange={(value: string) => setNewActivity(prev => ({ ...prev, type: value }))}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select activity type" />
                   </SelectTrigger>

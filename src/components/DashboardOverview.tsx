@@ -6,11 +6,11 @@ import { GraduationCap, Calendar, Trophy, Clock } from "lucide-react";
 export function DashboardOverview() {
   const stats = [
     {
-      title: "Current GPA",
-      value: "3.75",
-      description: "Out of 4.0",
+      title: "Current CGPA",
+      value: "7.8",
+      description: "Out of 10.0",
       icon: GraduationCap,
-      trend: "+0.15 from last semester"
+      trend: "+0.3 from last semester"
     },
     {
       title: "Attendance Rate",

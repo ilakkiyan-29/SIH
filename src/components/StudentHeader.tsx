@@ -14,7 +14,7 @@ export function StudentHeader() {
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none">
             <Badge variant="outline" className="bg-blue-50 text-blue-700">
-              Spring 2024 Semester
+              Spring 2025 Semester
             </Badge>
           </div>
           
@@ -36,7 +36,7 @@ export function StudentHeader() {
               </Avatar>
               <div className="hidden md:block">
                 <p className="text-sm font-medium">Alex Johnson</p>
-                <p className="text-xs text-muted-foreground">Student ID: 2024001</p>
+                <p className="text-xs text-muted-foreground">Student ID: 2025001</p>
               </div>
             </div>
           </nav>

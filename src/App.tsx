@@ -47,11 +47,7 @@ const menuItems = [
     icon: Trophy,
     id: "activities"
   },
-  {
-    title: "Reports",
-    icon: BarChart3,
-    id: "reports"
-  },
+  // ...existing code...
   {
     title: "Transcripts",
     icon: FileText,
@@ -86,17 +82,7 @@ export default function App() {
         return <AttendanceTracker />;
       case "activities":
         return <ActivityTracker />;
-      case "reports":
-        return (
-          <div className="space-y-6">
-            <h2>Academic Reports</h2>
-            <p className="text-muted-foreground">
-              Detailed academic reports and analytics will be displayed here.
-            </p>
-            <DashboardOverview />
-            <AcademicPerformance />
-          </div>
-        );
+      // ...existing code...
       case "transcripts":
         return (
           <div className="space-y-6">

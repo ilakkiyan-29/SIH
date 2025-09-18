@@ -14,11 +14,11 @@ export function AttendanceTracker() {
   ];
 
   const recentAttendance = [
-    { date: '2024-01-15', course: 'Math 301', status: 'present', time: '09:00 AM' },
-    { date: '2024-01-15', course: 'CS 401', status: 'present', time: '11:00 AM' },
-    { date: '2024-01-14', course: 'Eng 205', status: 'absent', time: '02:00 PM' },
-    { date: '2024-01-14', course: 'Phy 301', status: 'present', time: '10:00 AM' },
-    { date: '2024-01-13', course: 'Hist 101', status: 'late', time: '03:15 PM' },
+  { date: '2025-01-15', course: 'Math 301', status: 'present', time: '09:00 AM' },
+  { date: '2025-01-15', course: 'CS 401', status: 'present', time: '11:00 AM' },
+  { date: '2025-01-14', course: 'Eng 205', status: 'absent', time: '02:00 PM' },
+  { date: '2025-01-14', course: 'Phy 301', status: 'present', time: '10:00 AM' },
+  { date: '2025-01-13', course: 'Hist 101', status: 'late', time: '03:15 PM' },
   ];
 
   const getStatusBadge = (status: string) => {
