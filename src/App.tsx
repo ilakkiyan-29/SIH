@@ -26,6 +26,7 @@ import {
   FileText, 
   BarChart3 
 } from "lucide-react";
+import SignInPage from "./components/LoginPage";
 
 const menuItems = [
   {
@@ -62,6 +63,11 @@ const menuItems = [
 
 export default function App() {
   const [activeSection, setActiveSection] = useState("overview");
+  const [signedIn, setSignedIn] = useState(false);
+
+  if (!signedIn) {
+    return <SignInPage onLogin={() => setSignedIn(true)} />;
+  }
 
   const renderContent = () => {
     switch (activeSection) {
