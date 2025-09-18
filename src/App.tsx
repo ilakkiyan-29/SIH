@@ -1,176 +1,63 @@
-import { useState } from 'react';
-import { 
-  Sidebar, 
-  SidebarContent, 
-  SidebarGroup, 
-  SidebarGroupContent, 
-  SidebarGroupLabel, 
-  SidebarMenu, 
-  SidebarMenuButton, 
-  SidebarMenuItem, 
-  SidebarProvider, 
-  SidebarInset 
-} from "./components/ui/sidebar";
-import { StudentHeader } from "./components/StudentHeader";
-import { DashboardOverview } from "./components/DashboardOverview";
-import { AcademicPerformance } from "./components/AcademicPerformance";
-import { AttendanceTracker } from "./components/AttendanceTracker";
-import { ActivityTracker } from "./components/ActivityTracker";
-import { GradingSection } from "./components/GradingSection";
 import { Toaster } from "./components/ui/sonner";
-import { 
-  LayoutDashboard, 
-  GraduationCap, 
-  Calendar, 
-  Trophy, 
-  FileText, 
-  BarChart3 
-} from "lucide-react";
-import SignInPage from "./components/LoginPage";
+import LoginPage from "./components/LoginPage";
+import { StudentDashboard } from "./components/StudentDashboard";
+import { FacultyDashboard } from "./components/FacultyDashboard";
+import { AdminDashboard } from "./components/AdminDashboard";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { Loader2 } from "lucide-react";
 
-const menuItems = [
-  {
-    title: "Overview",
-    icon: LayoutDashboard,
-    id: "overview"
-  },
-  {
-    title: "Academic Performance",
-    icon: GraduationCap,
-    id: "performance"
-  },
-  {
-    title: "Grading",
-    icon: BarChart3,
-    id: "grading"
-  },
-  {
-    title: "Attendance",
-    icon: Calendar,
-    id: "attendance"
-  },
-  {
-    title: "Activity Tracker",
-    icon: Trophy,
-    id: "activities"
-  },
-  {
-    title: "Transcripts",
-    icon: FileText,
-    id: "transcripts"
-  }
-];
+type UserRole = 'student' | 'faculty' | 'admin';
 
-export default function App() {
-  const [activeSection, setActiveSection] = useState("overview");
-  const [signedIn, setSignedIn] = useState(false);
+function AppContent() {
+  const { user, isAuthenticated, isLoading, logout } = useAuth();
 
-  if (!signedIn) {
-    return <SignInPage onLogin={() => setSignedIn(true)} />;
+  console.log('App state:', { user, isAuthenticated, isLoading });
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+        <div className="text-center">
+          <div className="flex justify-center mb-4">
+            <Loader2 className="h-12 w-12 text-white animate-spin" />
+          </div>
+          <p className="text-white text-lg">Loading...</p>
+        </div>
+      </div>
+    );
   }
 
-  const renderContent = () => {
-    switch (activeSection) {
-      case "overview":
-        return (
-          <div className="space-y-6">
-            <DashboardOverview />
-            <div className="grid gap-6 md:grid-cols-2">
-              <div>
-                <h3 className="mb-4">Quick Stats</h3>
-                <AcademicPerformance />
-              </div>
-              <div>
-                <h3 className="mb-4">Recent Activity</h3>
-                <AttendanceTracker />
-              </div>
-            </div>
-          </div>
-        );
-      case "performance":
-        return <AcademicPerformance />;
-      case "grading":
-        return (
-          <div className="space-y-6">
-            <h2 className="text-3xl font-bold tracking-tight mb-4">Grading Overview</h2>
-            <GradingSection />
-          </div>
-        );
-      case "attendance":
-        return <AttendanceTracker />;
-      case "activities":
-        return <ActivityTracker />;
-      case "transcripts":
-        return (
-          <div className="space-y-6">
-            <h2>Transcripts & Documents</h2>
-            <p className="text-muted-foreground">
-              Access and download your official transcripts and academic documents.
-            </p>
-            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {['Official Transcript', 'Degree Progress Report', 'Course History'].map((doc) => (
-                <div key={doc} className="p-4 border rounded-lg">
-                  <h4 className="font-medium">{doc}</h4>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    Download or view your {doc.toLowerCase()}
-                  </p>
-                  <button className="mt-3 text-sm text-blue-600 hover:underline">
-                    Download PDF
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
+  if (!isAuthenticated || !user) {
+    console.log('Not authenticated, showing login page');
+    return <LoginPage onLogin={() => {}} />;
+  }
+
+  console.log('Authenticated, showing dashboard for role:', user.role);
+
+  const renderDashboard = () => {
+    switch (user.role) {
+      case 'student':
+        return <StudentDashboard onLogout={logout} />;
+      case 'faculty':
+        return <FacultyDashboard onLogout={logout} />;
+      case 'admin':
+        return <AdminDashboard onLogout={logout} />;
       default:
-        return <DashboardOverview />;
+        return <StudentDashboard onLogout={logout} />;
     }
   };
 
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full">
-        <Sidebar>
-          <SidebarContent>
-            <SidebarGroup>
-              <SidebarGroupLabel>Navigation</SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {menuItems.map((item) => (
-                    <SidebarMenuItem key={item.id}>
-                      <SidebarMenuButton
-                        onClick={() => setActiveSection(item.id)}
-                        isActive={activeSection === item.id}
-                      >
-                        <item.icon className="h-4 w-4" />
-                        <span>{item.title}</span>
-                      </SidebarMenuButton>
-                    </SidebarMenuItem>
-                  ))}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
-          </SidebarContent>
-        </Sidebar>
-
-        <SidebarInset>
-          <StudentHeader />
-          <main className="flex-1 p-6">
-            <div className="max-w-7xl mx-auto">
-              <div className="mb-6">
-                <h2 className="text-3xl font-bold tracking-tight">
-                  {menuItems.find(item => item.id === activeSection)?.title || "Dashboard"}
-                </h2>
-                <p className="text-muted-foreground">
-                  Welcome back, Alex! Here's your academic overview.
-                </p>
-              </div>
-              {renderContent()}
-            </div>
-          </main>
-        </SidebarInset>
-      </div>
+    <>
+      {renderDashboard()}
       <Toaster />
-    </SidebarProvider>
+    </>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
