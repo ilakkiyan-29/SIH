@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import jsPDF from 'jspdf';
 import { 
   Sidebar, 
   SidebarContent, 
@@ -67,6 +69,24 @@ interface StudentDashboardProps {
 
 export function StudentDashboard({ onLogout }: StudentDashboardProps) {
   const [activeSection, setActiveSection] = useState("overview");
+  const { user } = useAuth();
+
+  const handleDownloadTranscript = (docType: string) => {
+    if (!user) return;
+    const doc = new jsPDF();
+    doc.setFontSize(18);
+    doc.text('Academic Transcript', 20, 20);
+    doc.setFontSize(12);
+    doc.text(`Name: ${user.firstName} ${user.lastName}`, 20, 35);
+    doc.text(`Email: ${user.email}`, 20, 45);
+    doc.text(`Role: ${user.role}`, 20, 55);
+    if (user.studentId) doc.text(`Student ID: ${user.studentId}`, 20, 65);
+    if (user.department) doc.text(`Department: ${user.department}`, 20, 75);
+    if (user.year) doc.text(`Year: ${user.year}`, 20, 85);
+    if (user.semester) doc.text(`Semester: ${user.semester}`, 20, 95);
+    doc.text(`Document Type: ${docType}`, 20, 110);
+    doc.save(`${user.firstName}_${user.lastName}_${docType.replace(/\s/g, '_')}.pdf`);
+  };
 
   const renderContent = () => {
     switch (activeSection) {
@@ -113,7 +133,10 @@ export function StudentDashboard({ onLogout }: StudentDashboardProps) {
                   <p className="text-sm text-muted-foreground mt-2">
                     Download or view your {doc.toLowerCase()}
                   </p>
-                  <button className="mt-3 text-sm text-blue-600 hover:underline">
+                  <button
+                    className="mt-3 text-sm text-blue-600 hover:underline"
+                    onClick={() => handleDownloadTranscript(doc)}
+                  >
                     Download PDF
                   </button>
                 </div>
