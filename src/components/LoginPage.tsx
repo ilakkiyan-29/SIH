@@ -110,34 +110,32 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
       </div>
 
       {/* Main Content Container - Perfectly Centered */}
-      <div className="w-full max-w-md relative z-10 flex flex-col items-center justify-center">
+  <div className="w-full max-w-xl relative z-10 flex flex-col items-center justify-center text-center">
         {/* Header - Perfectly Centered */}
-        <div className="text-center mb-8 w-full">
-          <div className="flex justify-center items-center mb-6">
+  <div className="text-center mb-8 w-full flex flex-col items-center justify-center gap-0.5">
+          <div className="flex justify-center items-center">
             <div className="p-4 bg-white rounded-2xl shadow-lg flex items-center justify-center">
               <BookOpen className="h-12 w-12 text-blue-600" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-gray-900 mb-3 text-center">
-            Academic Portal
-          </h1>
-          <p className="text-gray-600 text-lg text-center">Sign in to access your dashboard</p>
+          <h1 className="text-4xl font-bold text-gray-900">Academic Portal</h1>
+          <p className="text-gray-600 text-lg">Sign in to access your dashboard</p>
         </div>
 
         {/* Login Card - Perfectly Centered */}
-        <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm w-full">
-          <CardHeader className="space-y-1 pb-6 text-center">
-            <CardTitle className="text-2xl text-center text-gray-900">Welcome Back</CardTitle>
-            <CardDescription className="text-center text-gray-600">
-              Choose your role and sign in to continue
-            </CardDescription>
+  <Card className="shadow-2xl border-0 bg-white/80 backdrop-blur-sm w-full max-w-xl flex flex-col items-center justify-center text-center">
+          <CardHeader className="space-y-1 pb-6 text-center flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center w-full gap-1">
+              <CardTitle className="text-2xl text-gray-900 font-bold whitespace-nowrap">Welcome Back</CardTitle>
+              <CardDescription className="text-gray-600 text-lg whitespace-nowrap mb-1">Choose the mode of role and sign in to continue</CardDescription>
+            </div>
           </CardHeader>
-          <CardContent className="w-full">
-            <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as UserRole)} className="w-full">
-              <TabsList className="grid w-full grid-cols-3 mb-6 bg-gray-100">
+          <CardContent className="w-full flex flex-col items-center justify-center text-center">
+            <Tabs value={activeTab} onValueChange={(value: string) => setActiveTab(value as UserRole)} className="w-full flex flex-col items-center justify-center text-center">
+              <TabsList className="grid w-full grid-cols-3 mb-6 mt-0 bg-gray-100">
                 <TabsTrigger 
                   value="student" 
-                  className="flex items-center justify-center gap-2 data-[state=active]:bg-blue-500 data-[state=active]:text-white text-gray-600"
+                  className="flex items-center justify-center gap-0 data-[state=active]:bg-blue-500 data-[state=active]:text-white text-gray-600"
                 >
                   <GraduationCap className="h-4 w-4" />
                   Student
@@ -158,10 +156,10 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value={activeTab} className="space-y-6 w-full">
-                {/* Role Info Card - Perfectly Centered */}
-                <div className={`flex items-center justify-center gap-4 p-4 bg-gradient-to-r ${getRoleColor(activeTab)} rounded-xl text-white w-full`}>
-                  <div className="p-2 bg-white/20 rounded-lg flex items-center justify-center">
+              <TabsContent value={activeTab} className="space-y-6 w-full flex flex-col items-center justify-center text-center">
+                {/* Role Info Card - Centered */}
+                <div className={`flex flex-col items-center justify-center gap-4 p-4 bg-gradient-to-r ${getRoleColor(activeTab)} rounded-xl text-white w-full`}>
+                  <div className="p-2 bg-white/20 rounded-lg flex items-center justify-center mx-auto">
                     {getRoleIcon(activeTab)}
                   </div>
                   <div className="text-center flex-1">
@@ -170,9 +168,9 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                   </div>
                 </div>
 
-                {/* Login Form - Perfectly Centered */}
-                <form onSubmit={handleSubmit} className="space-y-5 w-full">
-                  <div className="space-y-2 w-full">
+                {/* Login Form - Centered */}
+                <form onSubmit={handleSubmit} className="space-y-5 w-full flex flex-col items-center justify-center text-center">
+                  <div className="space-y-2 w-full flex flex-col items-center justify-center text-center">
                     <Label htmlFor="email" className="text-gray-700 font-medium text-center block">Email Address</Label>
                     <Input
                       id="email"
@@ -180,22 +178,22 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                       placeholder="Enter your email address"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500 w-full"
+                      className="h-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500 w-72 mx-auto text-center"
                       required
                       disabled={isLoading}
                     />
                   </div>
 
-                  <div className="space-y-2 w-full">
+                  <div className="space-y-2 w-full flex flex-col items-center justify-center text-center">
                     <Label htmlFor="password" className="text-gray-700 font-medium text-center block">Password</Label>
-                    <div className="relative w-full">
+                    <div className="relative w-72 mx-auto">
                       <Input
                         id="password"
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="h-12 pr-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500 w-full"
+                        className="h-12 pr-12 border-gray-300 focus:border-blue-500 focus:ring-blue-500 w-full text-center"
                         required
                         disabled={isLoading}
                       />
@@ -217,14 +215,14 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                   </div>
 
                   {error && (
-                    <Alert variant="destructive" className="bg-red-50 border-red-200 text-red-800 w-full">
+                    <Alert variant="destructive" className="bg-red-50 border-red-200 text-red-800 w-72 mx-auto">
                       <AlertDescription className="text-center">{error}</AlertDescription>
                     </Alert>
                   )}
 
                   <Button 
                     type="submit" 
-                    className={`w-full h-12 bg-gradient-to-r ${getRoleColor(activeTab)} hover:opacity-90 text-white font-semibold shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center`}
+                    className={`w-72 h-12 bg-gradient-to-r ${getRoleColor(activeTab)} hover:opacity-90 text-white font-semibold shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto`}
                     disabled={isLoading}
                   >
                     {isLoading ? (
@@ -244,9 +242,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             </Tabs>
 
             <div className="mt-8 text-center w-full">
-              <p className="text-sm text-gray-500 text-center">
-                Need help? Contact your system administrator
-              </p>
+              <p className="text-sm text-gray-500">Need help? Contact your system administrator</p>
             </div>
           </CardContent>
         </Card>
@@ -259,7 +255,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes blob {
           0% {
             transform: translate(0px, 0px) scale(1);
