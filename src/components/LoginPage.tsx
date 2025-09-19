@@ -157,20 +157,8 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               </TabsList>
 
               <TabsContent value={activeTab} className="space-y-6 w-full flex flex-col items-center justify-center text-center">
-                {/* Role Info Card - Centered */}
-                <div className={`flex flex-col items-center justify-center gap-4 p-4 bg-gradient-to-r ${getRoleColor(activeTab)} rounded-xl text-white w-full`}>
-                  <div className="p-2 bg-white/20 rounded-lg flex items-center justify-center mx-auto">
-                    {getRoleIcon(activeTab)}
-                  </div>
-                  <div className="text-center flex-1">
-                    <p className="font-semibold capitalize">{activeTab} Portal</p>
-                    <p className="text-sm opacity-90">{getRoleDescription(activeTab)}</p>
-                  </div>
-                </div>
-
-                {/* Login Form - Centered */}
                 <form onSubmit={handleSubmit} className="space-y-5 w-full flex flex-col items-center justify-center text-center">
-                  <div className="space-y-2 w-full flex flex-col items-center justify-center text-center">
+                  <div style={{ marginTop: '48px' }} className="space-y-2 w-full flex flex-col items-center justify-center text-center">
                     <Label htmlFor="email" className="text-gray-700 font-medium text-center block">Email Address</Label>
                     <Input
                       id="email"
@@ -221,8 +209,8 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                   )}
 
                   <Button 
-                    type="submit" 
-                    className={`w-72 h-12 bg-gradient-to-r ${getRoleColor(activeTab)} hover:opacity-90 text-white font-semibold shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto`}
+                    type="submit"
+                    className={`w-72 h-12 bg-gradient-to-r ${getRoleColor(activeTab)} opacity-90 text-white font-semibold shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto`}
                     disabled={isLoading}
                   >
                     {isLoading ? (
@@ -241,18 +229,10 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
               </TabsContent>
             </Tabs>
 
-            <div className="mt-8 text-center w-full">
-              <p className="text-sm text-gray-500">Need help? Contact your system administrator</p>
-            </div>
+         
           </CardContent>
         </Card>
 
-        {/* Footer - Perfectly Centered */}
-        <div className="mt-8 text-center w-full">
-          <p className="text-gray-500 text-sm text-center">
-            © 2024 Academic Portal. All rights reserved.
-          </p>
-        </div>
       </div>
 
       <style>{`
