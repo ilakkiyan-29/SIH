@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import jsPDF from 'jspdf';
+import QRCode from 'qrcode';
 import { 
   Sidebar, 
   SidebarContent, 
@@ -71,11 +72,11 @@ export function StudentDashboard({ onLogout }: StudentDashboardProps) {
   const [activeSection, setActiveSection] = useState("overview");
   const { user } = useAuth();
 
-  const handleDownloadTranscript = (docType: string) => {
+  const handleDownloadTranscript = async (docType: string) => {
     if (!user) return;
     const doc = new jsPDF();
-    doc.setFontSize(18);
-    doc.text('Academic Transcript', 20, 20);
+    doc.setFontSize(20);
+    doc.text('Verified Digital Portfolio', 20, 20);
     doc.setFontSize(12);
     doc.text(`Name: ${user.firstName} ${user.lastName}`, 20, 35);
     doc.text(`Email: ${user.email}`, 20, 45);
@@ -85,7 +86,39 @@ export function StudentDashboard({ onLogout }: StudentDashboardProps) {
     if (user.year) doc.text(`Year: ${user.year}`, 20, 85);
     if (user.semester) doc.text(`Semester: ${user.semester}`, 20, 95);
     doc.text(`Document Type: ${docType}`, 20, 110);
-    doc.save(`${user.firstName}_${user.lastName}_${docType.replace(/\s/g, '_')}.pdf`);
+
+    // Add random projects
+    const projects = [
+      'AI Chatbot for Student Support',
+      'Online Exam Proctoring System',
+      'Smart Attendance Tracker',
+      'Course Recommendation Engine',
+      'Digital Gradebook',
+      'Faculty Feedback Portal',
+      'Student Portfolio Website',
+      'Mobile App for Campus Events',
+      'Library Management System',
+      'Virtual Lab Simulator'
+    ];
+    // Pick 3 random projects
+    const shuffled = projects.sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 3);
+    doc.setFontSize(14);
+    doc.text('Projects:', 20, 130);
+    doc.setFontSize(12);
+    selected.forEach((proj, idx) => {
+      doc.text(`• ${proj}`, 28, 140 + idx * 10);
+    });
+
+    // Generate a random QR code
+    const qrData = `Verified for ${user.firstName} ${user.lastName} - ${Date.now()}`;
+    const qrUrl = await QRCode.toDataURL(qrData, { width: 80, margin: 1 });
+    // Place QR at bottom right
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    doc.addImage(qrUrl, 'PNG', pageWidth - 50, pageHeight - 50, 40, 40);
+
+    doc.save(`${user.firstName}_${user.lastName}_${docType.replace(/\s/g, '_')}_portfolio.pdf`);
   };
 
   const renderContent = () => {
